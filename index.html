@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<title>Canop/snow Demonstration</title>
+	<script src=snow.js></script>
+	<style>
+		html, body {
+			height: 100%;
+			line-height: 150%;
+		}
+		body {
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			background: linear-gradient(to bottom, #0c243d 0%,#113f6d 49%,#064000 100%);
+			color: #ccc;
+			font-family: sans-serif;
+		}
+		p {
+			text-align: center;
+			max-width: 460px;
+			margin: 20px;
+		}
+		a, a:visited {
+			color: gold;
+			text-decoration: none;
+			font-weight: bold;
+		}
+		a:hover {
+			color: white;
+		}
+		#buttons {
+			width: 400px;
+		}
+		#buttons, #dialog-buttons {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-around;
+		}
+		#dialog {
+			display: none;
+			background: rgba(255, 255, 255, .07);
+			flex-direction: row;
+			align-items: stretch;
+		}
+		#dialog > * {
+			margin: 10px;
+		}
+		#inputs {
+			display: flex;
+			flex-direction: column;
+		}
+		input {
+			margin-bottom: 5px;
+		}
+		#preview {
+			width: 300px;
+			min-height: 100px;
+			color: #eee;
+			background: #333;
+			padding: 10px 5px 5px 5px;
+		}
+	</style>
+</head>
+<body>
+	<p>
+	<a href=https://github.com/Canop/snow>Canop/snow</a> can be embedded in any web page to provide a light snow or a heavy blizzard without messing with the DOM.
+	</p>
+	<div id=buttons>
+		<button id=start>Start a new snow fall</button>
+		<button id=stop>Stop the snow</button>
+	</div>
+	<div id=dialog>
+		<div id=inputs>
+			<label for=stickingRatio>Sticking:</label>
+			<input type=range id=stickingRatio>
+			<label for=wind>Wind:</label>
+			<input type=range id=wind>
+			<label for=count>Flake Count:</label>
+			<input type=range min=5 max=100 id=count>
+			<label for=radius>Flake Size:</label>
+			<input type=range id=radius>
+		</div>
+		<div>
+			<pre id=preview></pre>
+			<div id=dialog-buttons>
+				<button id=ok>Execute</button>
+				<button id=cancel>Cancel</button>
+			</div>
+		</div>
+	</div>
+	<p id=message></p>
+	<script>
+		snow.start();
+
+		var	messageTimer,
+			gid = document.getElementById.bind(document),
+			start = gid("start"),
+			stop = gid("stop"),
+			message = gid("message"),
+			buttons = gid("buttons"),
+			dialog = gid("dialog");
+
+		function tell(txt){
+			clearTimeout(messageTimer);
+			message.textContent = txt;
+			messageTimer = setTimeout(function(){
+				message.textContent = "";
+			}, 15000);
+		}
+
+		stop.onclick = function(){
+			this.disabled = true;
+			snow.stop();
+			tell("Snow progressively stops falling");
+		}
+
+		function makeOptions(){
+			var options = {};
+			options.stickingRatio = +(gid("stickingRatio").value/50).toFixed(1);
+			options.wind = Math.round(gid("wind").value/5-10);
+			options.flakeCount = Math.round(Math.pow(gid("count").value, 1.8495));
+			options.maxRadius = +(gid("radius").value/30+1.2).toFixed(1);
+			return options;
+		}
+
+		function fillPreview(){
+			gid("preview").innerHTML = "snow.start(" + JSON.stringify(makeOptions(), null, "\t") + ");";
+		}
+
+		[].forEach.call(document.querySelectorAll("input"), function(input){
+			input.onchange = fillPreview;
+		});
+
+		start.onclick = function(){
+			dialog.style.display = "flex";
+			buttons.style.display = "none";
+		}
+
+		cancel.onclick = function(){
+			dialog.style.display = "none";
+			buttons.style.display = "flex";
+		}
+
+		ok.onclick = function(){
+			dialog.style.display = "none";
+			buttons.style.display = "flex";
+			stop.disabled = false;
+			snow.start(makeOptions());
+			message.textContent = "";
+		}
+
+		fillPreview();
+	</script>
+</body>
+</html>

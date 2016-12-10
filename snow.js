@@ -7,7 +7,7 @@ window.snow = (function(){
 		W,
 		H,
 		heights = [],
-		n,
+		n = 0,
 		timer,
 		fall;
 
@@ -34,7 +34,7 @@ window.snow = (function(){
 		canvas.width = W;
 		canvas.height = H;
 		ctx = canvas.getContext("2d");
-		clearGround();
+		if (heights.length!=W) clearGround();
 	}
 
 	function rnd(min, max){
@@ -46,7 +46,7 @@ window.snow = (function(){
 	}
 
 	function Fall(options){
-		this.flakes = new Array(options.flakeCount || 150);
+		this.flakes = new Array(Math.ceil(options.flakeCount) || 400);
 		this.maxRadius = options.maxRadius || 1.7;
 		this.wind = options.wind || 0;
 		this.color = options.color || "#ddf";
@@ -70,16 +70,18 @@ window.snow = (function(){
 			}
 		}
 		if (this.dying) {
-			this.flakes = this.flakes.filter(function(v){ return v });
+			this.flakes = this.flakes.filter(function(v){
+				return v;
+			});
 			if (!this.flakes.length) fall = null;
 		}
 		if (n%2) {
 			for (var i=1; i<W; i++) {
 				var d = heights[i]-heights[i-1];
 				if (d>1) {
-					heights[i] -=.9*d;
-					heights[i-1] +=.5*d;
-					if (i>1) heights[i-2] +=.3*d;
+					heights[i] -=.7*d;
+					heights[i-1] +=.3*d;
+					if (i>1) heights[i-2] +=.2*d;
 					if (i>2) heights[i-3] +=.1*d;
 				}
 			}
@@ -87,9 +89,9 @@ window.snow = (function(){
 			for (var i=0; i<W-1; i++) {
 				var d = heights[i]-heights[i+1];
 				if (d>1) {
-					heights[i] -=.9*d;
-					heights[i+1] +=.5*d;
-					if (i<W-2) heights[i+2] +=.3*d;
+					heights[i] -=.7*d;
+					heights[i+1] +=.3*d;
+					if (i<W-2) heights[i+2] +=.2*d;
 					if (i<W-3) heights[i+3] +=.1*d;
 				}
 			}
@@ -102,7 +104,7 @@ window.snow = (function(){
 	}
 
 	function Flake(fall){
-		this.y = rnd(-H/2, H/2);
+		this.y = rnd(-H, 0);
 		this.x = fall.rndX();
 		this.radius = rnd(1, fall.maxRadius);
 		this.speed = rnd(fall.minSpeed, fall.maxSpeed);
@@ -117,8 +119,8 @@ window.snow = (function(){
 		this.y += this.speed;
 		var	i = Math.round(this.x),
 			h;
-		if (i<0) h = heights[0]+10;
-		else if (i>=W) h = heights[W-1]+10;
+		if (i<0) h = heights[0];
+		else if (i>=W) h = heights[W-1];
 		else h = heights[i];
 		if (this.y >= H-h) {
 			if (i>=0 && i<W) {
@@ -156,7 +158,6 @@ window.snow = (function(){
 			timer = setTimeout(draw, 25);
 		}
 	}
-
 
 	return {
 		start: function(options){
