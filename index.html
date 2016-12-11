@@ -95,7 +95,12 @@
 	</div>
 	<p id=message></p>
 	<script>
-		snow.start();
+		snow.start({
+			maxRadius: 4,
+			flakeCount: 3000,
+			stickingRatio: 2,
+			wind: -2
+		});
 
 		var	messageTimer,
 			gid = document.getElementById.bind(document),
