@@ -102,7 +102,7 @@ window.snow = (function(){
 	}
 	Fall.prototype.rndX = function(){
 		var windRange = this.wind*H/this.minSpeed;
-		return rnd(Math.min(0, -windRange), Math.max(W, W-windRange));
+		return rnd(Math.min(0, -windRange)-10, Math.max(W, W-windRange)+10);
 	}
 
 	function Flake(fall){
