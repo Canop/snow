@@ -7,7 +7,7 @@ Make it snow on your web site.
 * Customizable: from a light snow not really sticking to a blizzard
 * Dynamically controllable: stop or start new snow falls
 * Don't mess with the DOM: only one canvas is added
-* No dependance
+* Light and without dependence
 
 [![Chat on Miaou](https://dystroy.org/miaou/static/shields/room-fr.svg?v=1)](https://dystroy.org/miaou/3?Code_Croissants)
 [![Chat on Miaou](https://dystroy.org/miaou/static/shields/room-en.svg?v=1)](https://dystroy.org/miaou/8?Javascript)
@@ -43,3 +43,4 @@ You can ask the snow to gently stop:
 * `minSpeed`: vertical minimal speed. Default: `1`
 * `maxSpeed`: vertical maximal speed. Default: `4.2`
 * `stickingRatio`: how much the snow sticks to the ground. Default: `.4`
+* `maxHeightRatio`: at what part of the screen height does snow stop accumulating. Default: `.25`

@@ -24,6 +24,7 @@ window.snow = (function(){
 		}
 		W = window.innerWidth;
 		H = window.innerHeight;
+		canvas.id = "snow-canvas";
 		canvas.style.pointerEvents = "none";
 		canvas.style.position = "fixed";
 		canvas.style.zIndex = 5000; // todo make it modifiable
@@ -53,6 +54,7 @@ window.snow = (function(){
 		this.minSpeed = options.minSpeed || 1;
 		this.maxSpeed = options.maxSpeed || 4.2;
 		this.stickingRatio = options.stickingRatio || .4;
+		this.maxHeightRatio = options.maxHeightRatio || .25;
 		this.dying = false;
 		for (var i=0; i<this.flakes.length; i++) this.flakes[i] = new Flake(this);
 	}
@@ -124,7 +126,9 @@ window.snow = (function(){
 		else h = heights[i];
 		if (this.y >= H-h) {
 			if (i>=0 && i<W) {
-				heights[i] += this.radius * fall.stickingRatio;
+				if (h<H*fall.maxHeightRatio) {
+					heights[i] += this.radius * fall.stickingRatio;
+				}
 			}
 			if (fall.dying && Math.random()<.7) {
 				return true; // flake disapears
@@ -143,7 +147,8 @@ window.snow = (function(){
 		for (var i=0; i<heights.length; i++) {
 			ctx.lineTo(i, H-heights[i]);
 		}
-		ctx.lineTo(W, H);
+		ctx.lineTo(W+1, H-heights[heights.length-1]);
+		ctx.lineTo(W+1, H);
 		ctx.lineTo(0, H);
 		ctx.fill();
 	}
