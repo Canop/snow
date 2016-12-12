@@ -166,10 +166,8 @@ window.snow = (function(){
 
 	return {
 		start: function(options){
-			console.log("start snow", options);
 			if (!ctx) resetScreen();
 			fall = new Fall(options||{});
-			console.log('fall:', fall);
 			running = true;
 			draw();
 		},
