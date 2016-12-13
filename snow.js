@@ -11,11 +11,6 @@ window.snow = (function(){
 		timer,
 		fall;
 
-	function clearGround(){
-		heights = new Array(W);
-		for (var i=0; i<W; i++) heights[i] = 0;
-	}
-
 	function resetScreen(){
 		if (!canvas) {
 			window.addEventListener("resize", resetScreen);
@@ -35,7 +30,13 @@ window.snow = (function(){
 		canvas.width = W;
 		canvas.height = H;
 		ctx = canvas.getContext("2d");
-		if (heights.length!=W) clearGround();
+		if (heights.length<W) {
+			var	i = 0,
+				nh = new Array(W);
+			for (;i<heights.length; i++) nh[i] = heights[i];
+			for (;i<W; i++) nh[i] = 0;
+			heights = nh;
+		}
 	}
 
 	function rnd(min, max){
