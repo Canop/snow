@@ -44,3 +44,10 @@ You can ask the snow to gently stop:
 * `maxSpeed`: vertical maximal speed. Default: `4.2`
 * `stickingRatio`: how much the snow sticks to the ground. Default: `.4`
 * `maxHeightRatio`: at what part of the screen height does snow stop accumulating. Default: `.25`
+
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2016 Denys Séguret <[http://dystroy.org/](http://dystroy.org/)>
