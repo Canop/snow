@@ -110,7 +110,11 @@ window.snow = (function(){
 		this.y = rnd(-H, 0);
 		this.x = fall.rndX();
 		this.radius = rnd(1, fall.maxRadius);
-		this.speed = rnd(fall.minSpeed, fall.maxSpeed);
+		if (fall.maxRadius>1) {
+			this.speed = fall.minSpeed + (fall.maxSpeed-fall.minSpeed)*(this.radius-1)/(fall.maxRadius-1);
+		} else {
+			this.speed = rnd(fall.minSpeed, fall.maxSpeed);
+		}
 		this.omega = rnd(.02, .13);
 	}
 	Flake.prototype.draw = function(){
