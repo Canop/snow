@@ -9,8 +9,8 @@ Make it snow on your web site.
 * Don't mess with the DOM: only one canvas is added
 * Light and with no dependency
 
-[![Chat on Miaou](https://dystroy.org/miaou/static/shields/room-fr.svg?v=1)](https://dystroy.org/miaou/3?Code_Croissants)
-[![Chat on Miaou](https://dystroy.org/miaou/static/shields/room-en.svg?v=1)](https://dystroy.org/miaou/8?Javascript)
+[![Chat on Miaou](https://miaou.dystroy.org/static/shields/room-fr.svg?v=1)](https://miaou.dystroy.org/3)
+[![Chat on Miaou](https://miaou.dystroy.org/static/shields/room-en.svg?v=1)](https://miaou.dystroy.org/8)
 
 ## Usage
 
@@ -45,6 +45,9 @@ You can ask the snow to gently stop:
 * `stickingRatio`: how much the snow sticks to the ground. Default: `.4`
 * `maxHeightRatio`: at what part of the screen height does snow stop accumulating. Default: `.25`
 
+## Install with npm
+
+`npm i Canop/snow`
 
 ## License
 

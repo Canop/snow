@@ -1,0 +1,17 @@
+{
+  "name": "snow",
+  "version": "1.0.0",
+  "description": "Make it snow on your web site",
+  "main": "snow.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Canop/snow.git"
+  },
+  "keywords": [
+    "snow",
+    "winter",
+    "cold"
+  ],
+  "author": "Canop",
+  "license": "MIT"
+}
