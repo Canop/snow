@@ -178,6 +178,9 @@ window.snow = (function(){
 		},
 		stop: function(){
 			if (fall) fall.dying = true;
+		},
+		ground: function(){
+			return heights;
 		}
 	}
 
