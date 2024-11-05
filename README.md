@@ -3,8 +3,9 @@ Make it snow on your web site.
 
 [Live Demonstration](https://Canop.github.io/snow/)
 
-* Snow cumulates at the bottom of the screen
+* Snow piles up at the bottom of the screen
 * Customizable: from a light snow to a blizzard
+* Optionally restricted to a date range
 * Dynamically controllable: start new snow falls and stop them
 * Don't mess with the DOM: only one canvas is added
 * Light and with no dependency
@@ -24,11 +25,14 @@ Then call the start function:
 
 or with some parameters:
 
-    snow.start({
-	flakeCount: 4000,
-	stickingRatio: 0.55,
-	wind: -7
-    });
+```Javascript
+snow.start({
+    flakeCount: 1000,
+    stickingRatio: 0.55,
+    wind: -2,
+    monthDayRange: "12/15-01/05", // only from mid December to January the 5
+});
+```
 
 You can ask the snow to gently stop:
 
@@ -36,14 +40,15 @@ You can ask the snow to gently stop:
 
 ## Options
 
-* `flakeCount`: number of flakes. Default: `400`
-* `maxRadius`: max radius of flakes. Default: `1.7`
+* `flakeCount`: number of flakes. Default: `800`
+* `maxRadius`: max radius of flakes. Default: `2.5`
 * `wind`: wind speed, can be positive (towards the right) or negative. Default: `0`. Reasonnable winds are lower than `20`.
 * `color`: snow color. Default: `#ddf`
 * `minSpeed`: vertical minimal speed. Default: `1`
 * `maxSpeed`: vertical maximal speed. Default: `4.2`
 * `stickingRatio`: how much the snow sticks to the ground. Default: `.4`
 * `maxHeightRatio`: at what part of the screen height does snow stop accumulating. Default: `.25`
+* `monthDayRange`: a range of month/day during which snow is active. None by default
 
 ## Install with npm
 

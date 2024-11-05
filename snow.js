@@ -48,8 +48,8 @@ window.snow = (function(){
 	}
 
 	function Fall(options){
-		this.flakes = new Array(Math.ceil(options.flakeCount) || 400);
-		this.maxRadius = options.maxRadius || 1.7;
+		this.flakes = new Array(Math.ceil(options.flakeCount) || 800);
+		this.maxRadius = options.maxRadius || 2.5;
 		this.wind = options.wind || 0;
 		this.color = options.color || "#fff";
 		this.minSpeed = options.minSpeed || 1;
@@ -57,6 +57,7 @@ window.snow = (function(){
 		this.stickingRatio = options.stickingRatio || .4;
 		this.maxHeightRatio = options.maxHeightRatio || .25;
 		this.dying = false;
+		this.monthDayRange = null;
 		for (var i=0; i<this.flakes.length; i++) this.flakes[i] = new Flake(this);
 	}
 	Fall.prototype.draw = function(){
@@ -169,8 +170,29 @@ window.snow = (function(){
 		}
 	}
 
+	function isDateInMonthDayRange(date, range) {
+		let day = date.getDate();
+		let month = date.getMonth() + 1; // in [1..12]
+		let [startDate, endDate] = range.trim().split('-');
+		let [startMonth, startDay] = startDate.trim().split('/');
+		let [endMonth, endDay] = endDate.trim().split('/');
+		if (startMonth <= endMonth) {
+			if (month < startMonth || month > endMonth) return false;
+		} else {
+			if (!(month >= startMonth || month <= endMonth)) return false;
+		}
+		if (month == startMonth && day < startDay) return false;
+		if (month == endMonth && day > endDay) return false;
+		return true;
+	}
+
 	return {
 		start: function(options){
+			if (options.monthDayRange) {
+				if (!isDateInMonthDayRange(new Date, options.monthDayRange)) {
+					return;
+				}
+			}
 			if (!ctx) resetScreen();
 			fall = new Fall(options||{});
 			running = true;
